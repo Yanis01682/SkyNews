@@ -3,6 +3,13 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+val localProperties = java.util.Properties().apply {
+    val file = rootProject.file("local.properties")
+    if (file.exists()) {
+        file.inputStream().use { load(it) }
+    }
+}
+
 android {
     namespace = "com.java.zhangzhiyuan"
     compileSdk = 36
@@ -33,9 +40,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
+        buildConfigField("String", "ZHIPU_API_KEY", "\"${localProperties.getProperty("ZHIPU_API_KEY", "")}\"")
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
     packaging {
         resources {

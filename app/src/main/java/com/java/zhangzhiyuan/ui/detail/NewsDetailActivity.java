@@ -36,6 +36,7 @@ import androidx.media3.exoplayer.source.DefaultMediaSourceFactory;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.gson.Gson;
+import com.java.zhangzhiyuan.BuildConfig;
 import com.java.zhangzhiyuan.R;
 import com.java.zhangzhiyuan.adapter.ImageSliderAdapter;
 import com.java.zhangzhiyuan.databinding.ActivityNewsDetailBinding;
@@ -62,7 +63,7 @@ import retrofit2.Response;
 public class NewsDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "NewsDetailActivity";
-    private static final String API_KEY = "805c28b7b77747a88617bfb68e53aca8.FJK3H1Frt1nhGVvR";
+    private static final String API_KEY = BuildConfig.ZHIPU_API_KEY;
     //视图绑定对象，用于访问 activity_news_detail.xml 中的所有UI组件。
     private ActivityNewsDetailBinding binding;
 
@@ -538,6 +539,10 @@ public class NewsDetailActivity extends AppCompatActivity {
     }
 
     private void fetchSummaryFromGlmApi(final String content, final SummaryCallback callback) {
+        if (API_KEY == null || API_KEY.trim().isEmpty()) {
+            callback.onFailure("摘要生成失败：未配置智谱 API Key");
+            return;
+        }
         String token = JwtTokenGenerator.generateToken(API_KEY, 3600 * 1000);
         //1. 构造ChatMessage，包含角色和我们给AI的指令
         ZhipuRequest.ChatMessage message = new ZhipuRequest.ChatMessage("user", "请为以下新闻内容生成一段100到150字左右的摘要，请直接返回摘要内容，不要包含“好的”、“当然”等多余的词语：\n\n" + content);

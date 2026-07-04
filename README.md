@@ -35,13 +35,19 @@ app/src/main/java/com/java/zhangzhiyuan/
 
 ## Build
 
+Create `local.properties` for optional AI summary support:
+
+```properties
+ZHIPU_API_KEY=your_api_key
+```
+
 Open the project with Android Studio and build the `app` module, or run:
 
 ```bash
 ./gradlew assembleDebug
 ```
 
-The repository also contains a release APK generated during development under `app/release/`.
+Release APKs are not tracked in this repository.
 
 ## Status
 

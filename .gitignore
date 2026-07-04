@@ -14,3 +14,11 @@
 .externalNativeBuild
 .cxx
 local.properties
+*.apk
+*.aab
+*.jks
+*.keystore
+*.p12
+
+app/release/
+
